@@ -1,0 +1,27 @@
+h1{
+    color: red;
+    text-align: center;
+}
+h3{
+    color: #dbb753;
+}
+#data_disp{
+    border: 1px solid red;
+}
+#get_timeList{
+    text-align: center;
+    background-color: #dbb753;
+    color: red;
+    border: 1px solid black;
+    border-radius: 2px;
+    width: 10%;
+    position: absolute;
+    left: 580px;
+}
+#get_timeList:hover{
+    background-color: white;
+}
+
+table, td{
+    border: 1px solid black;
+}

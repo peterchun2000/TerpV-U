@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> MLH Test </title>
+    <meta charset="UTF-8">
+    <!-- Link CSS and JS files -->
+    <link href="{{ url_for('static', filename='Stylesheet.css') }}" rel="Stylesheet">
+    <script type="text/javascript"
+    src="{{ url_for('static', filename='test.js') }}"></script>
+</head>
+<body>
+
+<h1> TerpVU </h1>
+
+<div id="data_disp" onclick="incr_Users()">
+    <h3 id="phoneUserCount">Usage Count: </h3>
+</div>
+
+
+<div id="get_timeList" onclick="getTimeList()"> Get List </div>
+
+<table id="timeTable">
+    <tr>
+        <td> Times of Usage (hrs, mins, seconds) </td>
+    </tr>
+</table>
+
+</body>
+</html>
