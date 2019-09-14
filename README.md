@@ -1,2 +1,2 @@
 # TerpV-U
-HopHacks project
+HopHacks project 2019
