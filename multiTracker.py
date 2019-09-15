@@ -53,12 +53,12 @@ def createTrackerByName(trackerType):
     
   return tracker
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-  print("Default tracking algoritm is CSRT \n"
-        "Available tracking algorithms are:\n")
-  for t in trackerTypes:
-      print(t)      
+#   print("Default tracking algoritm is CSRT \n"
+#         "Available tracking algorithms are:\n")
+#   for t in trackerTypes:
+#       print(t)      
 
 def match_with_obj(center_x_in, center_y_in):
   counter = 0
@@ -125,7 +125,7 @@ def get_cmmts(sub_theme_in, theme_dict_in):
 
 
 
-if __name__ == '__main__':
+def begin_tracking():
 
   trackerType = "CSRT"      
 
@@ -221,4 +221,5 @@ if __name__ == '__main__':
     # quit on ESC button
     if cv2.waitKey(1) & 0xFF == 27:  # Esc pressed
       print(str(make_table()))
-      break
+      return str(make_table())
+      

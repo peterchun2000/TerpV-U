@@ -1,27 +1,43 @@
+body{
+
+    background-color: white;
+
+}
+
 h1{
     color: red;
     text-align: center;
 }
 h3{
-    color: #dbb753;
+    color: yellow;
+}
+#umd_logo{
+
+    margin: 10px 0 0 0;
+
 }
 #data_disp{
     border: 1px solid red;
+    text-align: center;
+    background-color: red;
+    height: 70px;
 }
 #get_timeList{
     text-align: center;
-    background-color: #dbb753;
+    background-color: yellow;
     color: red;
     border: 1px solid black;
     border-radius: 2px;
     width: 10%;
     position: absolute;
-    left: 580px;
+    left: 570px;
+    margin: 8px 0 0 0;
 }
 #get_timeList:hover{
     background-color: white;
 }
 
-table, td{
+table{
     border: 1px solid black;
+    text-align: center;
 }

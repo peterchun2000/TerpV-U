@@ -4,17 +4,17 @@ var timesArray = []; // This array will store the times users used their phones 
 
 function incr_Users(){
     phoneUserCount++;
-    var timeTargets = new Date();
-    var Hour = timeTargets.getHours();
-    var Minute = timeTargets.getMinutes();
-    var Second = timeTargets.getSeconds();
-    timesArray.push([Hour, Minute, Second]);
+    // var timeTargets = new Date();
+    // var Hour = timeTargets.getHours();
+    // var Minute = timeTargets.getMinutes();
+    // var Second = timeTargets.getSeconds();
+    // timesArray.push([Hour, Minute, Second]);
     document.getElementById("phoneUserCount").textContent = "Usage Count: " + phoneUserCount;
-    console.log(timesArray);
+    // console.log(timesArray);
 }
 
 
-
+/*
 function getTimeList(){
     for(var i = 0; i < timesArray.length; i++){
         document.getElementById("timeTable").innerHTML += "<tr> <td>" + timesArray[i] + "</td> </tr>";
@@ -23,3 +23,4 @@ function getTimeList(){
     }
     //document.getElementById("timeList").textContent += (timesArray.toString() + "\n");
 }
+*/

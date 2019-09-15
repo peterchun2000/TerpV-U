@@ -1,30 +1,40 @@
-<!DOCTYPE html>
-<html>
+<!-- 
+    <head>
+        <title> MLH Test </title>
+        <meta charset="UTF-8">
+        <link href="{{ url_for('static', filename='Stylesheet.css') }}" rel="Stylesheet">
+        
+    </head-->
 
-<head>
-    <title> MLH Test </title>
-    <meta charset="UTF-8">
-    <!-- Link CSS and JS files -->
-    <link href="{{ url_for('static', filename='Stylesheet.css') }}" rel="Stylesheet">
-    <script type="text/javascript"
-    src="{{ url_for('static', filename='test.js') }}"></script>
-</head>
-<body>
+{% extends "bootstrap/base.html" %}
 
-<h1> TerpVU </h1>
+{% block title %} TerpVU {% endblock %}
+
+{% block content %}
+<link href="{{ url_for('static', filename='Stylesheet.css') }}" rel="Stylesheet">
+<script type="text/javascript"
+        src="{{ url_for('static', filename='test.js') }}"></script>
+
+<div class="container">
+<div>
+    <img id="umd_logo" width=240 height=90 src="{{url_for('static', filename='umd_cs.png')}}"/>
+    <h1 class="jumbotron text-center"> TerpVU </h1>
+</div>
 
 <div id="data_disp" onclick="incr_Users()">
     <h3 id="phoneUserCount">Usage Count: </h3>
 </div>
 
+<!-- <div id="get_timeList" onclick="getTimeList()"> Record </div> -->
+<button type="button" class="btn btn-danger" name="record" value="Record"></button>
 
-<div id="get_timeList" onclick="getTimeList()"> Get List </div>
-
-<table id="timeTable">
+<br>
+<br>
+{{table|safe}}
+<!-- <table id="timeTable" class="table table-bordered">
     <tr>
         <td> Times of Usage (hrs, mins, seconds) </td>
     </tr>
-</table>
-
-</body>
-</html>
+</table> -->
+</div>
+{% endblock %}
