@@ -22,7 +22,7 @@ def record():
         print("starting")
         html_table = begin_tracking()
         dataSum = get_data_sum()
-        return render_template('Test.html', table = html_table, data_time_sum = dataSum)
+        return render_template('Test.html', table = html_table)
 
 if __name__ == '__main__':
     app.run(debug=True)
