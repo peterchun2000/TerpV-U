@@ -9,16 +9,20 @@ from random import randint
 import time
 import numpy as np
 
+from flask_table import Table, Col
+
 t0 = time.time()
 tracked_times=[]
 obj_location_list=[]
 first = True
+
 class Usage:
   def __init__(self, x, y, start_time):
     self.x = x
     self.y = y
     self.start_time = start_time
     self.total_time = 0.0
+
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
 
 def createTrackerByName(trackerType):
@@ -69,6 +73,54 @@ def match_with_obj(center_x_in, center_y_in):
       return -1
     counter +=1
   return 0
+
+# Get some objects
+class Item(object):
+    def __init__(self, m_theme, sub_theme,count, list_of_cmmts, bttn):
+        self.user = m_theme
+        self.time = sub_theme
+
+def make_table(result_list):
+    items = []
+    theme_dict = result_list
+
+    for key, value in theme_dict.items():
+        for sub_theme in value:
+            items.append(Item(key, sub_theme.theme, len(sub_theme.comments), sub_theme.comments, '<button type="button" data-toggle="collapse" data-target="#demo" class="accordion-toggle btn btn-default">Comments</button>'))
+              
+    # Populate the table
+    table = ItemTable(items)
+
+    table_html = str(table.__html__().replace("<table>",'<table class="table">'))
+    # print(table_html)
+    table_html = replace_entities(table_html)
+
+    counter1 = count(1)
+    table_html = re.sub('data-target="#demo', lambda m: m.group() + str(next(counter1)), table_html)
+    
+    table_html = table_html.replace("</td></tr>", '</td></tr> <tr> <td colspan="6" class="hiddenRow"style="padding:0!important;"><div class="accordian-body collapse" id="demo"> <ul class="list-group"> [cmmt] </ul> </div></td></tr>')
+    counter2 = count(1)
+    table_html = re.sub('id="demo', lambda m: m.group() + str(next(counter2)), table_html)
+    for key, value in theme_dict.items():
+        for sub_theme in value:
+            table_html = table_html.replace('[cmmt]', get_cmmts(sub_theme.theme, theme_dict),1)
+    g.theme_dict = result_list
+
+    return table_html
+
+def get_cmmts(sub_theme_in, theme_dict_in):
+    theme_dict = theme_dict_in
+
+    result_str = ""
+    for key, value in theme_dict.items():
+        for sub_theme in value:
+            if(sub_theme == SubTheme(sub_theme_in)):
+                for ind_cmmt in sub_theme.comments:
+    
+                    result_str += '<li class="list-group-item">'+'<b>' + ind_cmmt.file_name + '</b>' + '<br>' + ind_cmmt.comment+"</li>"
+    return result_str
+
+
 
 if __name__ == '__main__':
 
