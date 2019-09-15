@@ -10,6 +10,7 @@ import time
 import numpy as np
 
 from flask_table import Table, Col
+from w3lib.html import replace_entities
 
 t0 = time.time()
 tracked_times=[]
@@ -74,39 +75,41 @@ def match_with_obj(center_x_in, center_y_in):
     counter +=1
   return 0
 
+class ItemTable(Table):
+  # start_time = Col('Start Time')
+  total_time = Col('Total Time')
+
 # Get some objects
 class Item(object):
-    def __init__(self, m_theme, sub_theme,count, list_of_cmmts, bttn):
-        self.user = m_theme
-        self.time = sub_theme
+  def __init__(self, total_time):
+    # self.start_time = start_time
+    self.total_time = total_time
 
-def make_table(result_list):
-    items = []
-    theme_dict = result_list
+def make_table():
+  items = []
 
-    for key, value in theme_dict.items():
-        for sub_theme in value:
-            items.append(Item(key, sub_theme.theme, len(sub_theme.comments), sub_theme.comments, '<button type="button" data-toggle="collapse" data-target="#demo" class="accordion-toggle btn btn-default">Comments</button>'))
-              
-    # Populate the table
-    table = ItemTable(items)
+  for obj in obj_location_list:
+    items.append(Item(obj.total_time))
+            
+  # Populate the table
+  table = ItemTable(items)
 
-    table_html = str(table.__html__().replace("<table>",'<table class="table">'))
-    # print(table_html)
-    table_html = replace_entities(table_html)
+  table_html = str(table.__html__().replace("<table>",'<table class="table">'))
+  # print(table_html)
+  table_html = replace_entities(table_html)
 
-    counter1 = count(1)
-    table_html = re.sub('data-target="#demo', lambda m: m.group() + str(next(counter1)), table_html)
-    
-    table_html = table_html.replace("</td></tr>", '</td></tr> <tr> <td colspan="6" class="hiddenRow"style="padding:0!important;"><div class="accordian-body collapse" id="demo"> <ul class="list-group"> [cmmt] </ul> </div></td></tr>')
-    counter2 = count(1)
-    table_html = re.sub('id="demo', lambda m: m.group() + str(next(counter2)), table_html)
-    for key, value in theme_dict.items():
-        for sub_theme in value:
-            table_html = table_html.replace('[cmmt]', get_cmmts(sub_theme.theme, theme_dict),1)
-    g.theme_dict = result_list
+  # counter1 = count(1)
+  # table_html = re.sub('data-target="#demo', lambda m: m.group() + str(next(counter1)), table_html)
+  
+  # table_html = table_html.replace("</td></tr>", '</td></tr> <tr> <td colspan="6" class="hiddenRow"style="padding:0!important;"><div class="accordian-body collapse" id="demo"> <ul class="list-group"> [cmmt] </ul> </div></td></tr>')
+  # counter2 = count(1)
+  # table_html = re.sub('id="demo', lambda m: m.group() + str(next(counter2)), table_html)
+  # for key, value in theme_dict.items():
+  #     for sub_theme in value:
+  #         table_html = table_html.replace('[cmmt]', get_cmmts(sub_theme.theme, theme_dict),1)
+  # g.theme_dict = result_list
 
-    return table_html
+  return table_html
 
 def get_cmmts(sub_theme_in, theme_dict_in):
     theme_dict = theme_dict_in
@@ -130,7 +133,7 @@ if __name__ == '__main__':
   videoPath = "videos/run.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(1)
+  cap = cv2.VideoCapture(0)
  
   # Read first frame
   success, frame = cap.read()
@@ -201,9 +204,9 @@ if __name__ == '__main__':
       print(center_text)
       index_of_obj = match_with_obj(center_x,center_y)
       if index_of_obj != -1 and not first:
-        obj_location_list[index_of_obj].time = t1 - obj_location_list[index_of_obj].start_time
+        obj_location_list[index_of_obj].total_time = t1 - obj_location_list[index_of_obj].start_time
 
-        print("time for index "+str(index_of_obj)+  ": "+str(obj_location_list[index_of_obj].time))
+        print("time for index "+str(index_of_obj)+  ": "+str(obj_location_list[index_of_obj].total_time))
       else:
         obj_location_list.append(Usage(center_x,center_y,time.time() ))
         print("making new")
@@ -217,4 +220,5 @@ if __name__ == '__main__':
 
     # quit on ESC button
     if cv2.waitKey(1) & 0xFF == 27:  # Esc pressed
+      print(str(make_table()))
       break
