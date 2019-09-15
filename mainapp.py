@@ -19,6 +19,7 @@ def main_page():
 @app.route('/', methods=["POST"])
 def record():
     if request.form.get('record') == "Record":
+        print("starting")
         html_table = begin_tracking()
         return render_template('Test.html', table = html_table)
 
