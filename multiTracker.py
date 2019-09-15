@@ -126,7 +126,7 @@ def get_cmmts(sub_theme_in, theme_dict_in):
 
 
 def begin_tracking():
-
+  global first
   trackerType = "CSRT"      
 
   # Set video to load
