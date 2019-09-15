@@ -18,9 +18,9 @@ obj_location_list=[]
 first = True
 data_time_sum = 0
 
-def get_data_sum():
-  for data in obj_location_list:
-    data_time_sum += obj_location_list[data]
+# def get_data_sum():
+#   for data in obj_location_list:
+#     data_time_sum += obj_location_list[data]
 
 
 class Usage:

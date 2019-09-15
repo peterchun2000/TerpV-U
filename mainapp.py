@@ -21,7 +21,7 @@ def record():
     if request.form.get('record') == "Record":
         print("starting")
         html_table = begin_tracking()
-        dataSum = get_data_sum()
+        dataSum = get_()
         return render_template('Test.html', table = html_table)
 
 if __name__ == '__main__':
