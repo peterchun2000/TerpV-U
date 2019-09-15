@@ -133,7 +133,7 @@ def begin_tracking():
   videoPath = "videos/run.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(1)
  
   # Read first frame
   success, frame = cap.read()
