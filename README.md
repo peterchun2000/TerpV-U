@@ -14,3 +14,8 @@ We decided to utilize a simple Logitech webcamera for the hardware. As for the s
 
 ### Implementation
 
+### People working on the Project:
+-Andy Chan
+-Dakshay Mehta
+-Peter Chun
+-Abdallah Hwishel
