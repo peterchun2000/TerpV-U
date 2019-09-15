@@ -11,24 +11,65 @@
 {% block title %} TerpVU {% endblock %}
 
 {% block content %}
+
+
 <link href="{{ url_for('static', filename='Stylesheet.css') }}" rel="Stylesheet">
 <script type="text/javascript"
         src="{{ url_for('static', filename='test.js') }}"></script>
 
 <div class="container">
-<div>
-    <img id="umd_logo" width=240 height=90 src="{{url_for('static', filename='umd_cs.png')}}"/>
-    <h1 class="jumbotron text-center"> TerpVU </h1>
-</div>
+
+<!-- <div>
+    <img id="umd_logo" width=540 height=200 class ="center-text"src="{{url_for('static', filename='browserturtle.png')}}"/>
+
+    </div> -->
+
+<div class="jumbotron">
+        <h1 class="text-center">TerpVU</h1>
+        <p class="text-center">For Speakers and Researchers</p>
+        <div class="container-fluid">
+            <!-- <div class="row">
+                    <div class="col col-md-4"></div>
+                    <img id="umd_logo" width=540 height=350 class="span4"src="{{url_for('static', filename='browserturtle.png')}}"/>
+                    <div class="span4"></div>
+                    </div>
+            <div class="row"> -->
+                <div class="col col-lg-6"><img id="umd_logo" width=560 height=370 class="span4"src="{{url_for('static', filename='browserturtle.png')}}"/></div>
+                <div class="col col-lg-4">
+                    <h4>Directions:</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-info">Press Record</li>
+                        <li class="list-group-item list-group-item-info">Select Model Object</li>
+                        <li class="list-group-item list-group-item-info">Press esc when finished; a chart will generate</li> 
+                    </ul> 
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col col-sm-4"></div>
+                <div class="col col-sm-4">
+                    <form class="form-inline center-block" method="POST" >
+                        <input class="btn btn-danger" name="record" type="submit" value="Record">
+                    </form>
+                </div>
+                <div class="col col-lg-4"></div>
+            </div>
+        </div>
+    
 
 <div id="data_disp" onclick="incr_Users()">
     <h3 id="phoneUserCount"> Sum: </h3> {{data_time_sum}}
 </div>
 
-<!-- <div id="get_timeList" onclick="getTimeList()"> Record </div> -->
-<form  method="POST" >
-    <button type="submit" class="btn btn-danger" name="record" value="Record"></button>
-</form>
+<!-- <div id="get_timeList" onclick="getTimeList()"> Record </div>
+<div class="row text-center">
+        <div class="col col-sm-4"></div>
+        <div class="col col-sm-4">
+        <form class="form-inline center-block" method="POST" >
+            <button type="submit" class="btn btn-primary" name="record" value="Record"></button>
+        </form>
+</div> -->
+
+
 <br>
 <br>
 {{table|safe}}
