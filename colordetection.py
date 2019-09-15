@@ -1,41 +1,34 @@
-# Python program for Detection of a  
-# specific color(blue here) using OpenCV with Python 
-import cv2 
-import numpy as np  
-  
-# Webcamera no 0 is used to capture the frames 
-cap = cv2.VideoCapture(1)  
-  
-# This drives the program into an infinite loop. 
-while(1):        
-    # Captures the live stream frame-by-frame 
-    _, frame = cap.read()  
-    # Converts images from BGR to HSV 
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) 
-    lower_red = np.array([110,50,50]) 
-    upper_red = np.array([130,255,255]) 
-  
-# Here we are defining range of bluecolor in HSV 
-# This creates a mask of blue coloured  
-# objects found in the frame. 
-mask = cv2.inRange(hsv, lower_red, upper_red) 
-  
-# The bitwise and of the frame and mask is done so  
-# that only the blue coloured objects are highlighted  
-# and stored in res 
-res = cv2.bitwise_and(frame,frame, mask= mask) 
-cv2.imshow('frame',frame) 
-cv2.imshow('mask',mask) 
-cv2.imshow('res',res) 
-  
-# This displays the frame, mask  
-# and res which we created in 3 separate windows. 
-k = cv2.waitKey(5) & 0xFF
-if k == 27: 
-break
-  
-# Destroys all of the HighGUI windows. 
-cv2.destroyAllWindows() 
-  
-# release the captured frame 
-cap.release() 
+import numpy as np
+import cv2
+cap = cv2.VideoCapture(r'E:/test.mp4')
+size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+video = cv2.VideoWriter(r'E:/6.avi', fourcc, 25, size)
+while(1):
+    ret, frame = cap.read()
+    if not ret:
+        break
+    frame = cv2.convertScaleAbs(frame)
+    params = cv2.SimpleBlobDetector_Params()
+    params.blobColor = 0
+    params.filterByColor = True
+    params.minArea = 0
+    params.filterByArea = False
+    params.minThreshold = 120;
+    params.maxThreshold = 255;
+    ver = (cv2.__version__).split('.')
+    if int(ver[0]) < 3:
+        detector = cv2.SimpleBlobDetector(params)
+    else:
+        detector = cv2.SimpleBlobDetector_create(params)
+    keypoints = detector.detect(frame)
+    im_with_keypoints = cv2.drawKeypoints(frame, keypoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    if ret == True:
+        video.write(im_with_keypoints)
+        cv2.imshow('frame', im_with_keypoints)
+    else:
+        cap.release()
+        break
+    k = cv2.waitKey(10) & 0xff
+    if k == 27:
+        break

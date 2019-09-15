@@ -6,7 +6,18 @@ from __future__ import print_function
 import sys
 import cv2
 from random import randint
+import time
+import numpy as np
 
+t0 = time.time()
+tracked_times=[]
+obj_location_list=[]
+first = True
+class Usage:
+  def __init__(self, x, y):
+    self.x = x
+    self.y = y
+    self.time = 0.0
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
 
 def createTrackerByName(trackerType):
@@ -43,13 +54,30 @@ if __name__ == '__main__':
   for t in trackerTypes:
       print(t)      
 
+def match_with_obj(center_x_in, center_y_in):
+  counter = 0
+  for single_location in obj_location_list:
+    checking_center_x = single_location.x 
+    checking_center_y = single_location.y
+    print("subtracting x " + str(checking_center_x - center_x_in))
+    print("subtracting y" + str(checking_center_y - center_y_in))
+    if abs(checking_center_x - center_x_in)<= 15 and abs(checking_center_y - center_y_in)<= 15:
+      print("returned index" +str(counter))
+      return counter
+    elif counter+1 == len(obj_location_list):
+      return -1
+    counter +=1
+  return 0
+
+if __name__ == '__main__':
+
   trackerType = "CSRT"      
 
   # Set video to load
   videoPath = "videos/run.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(1)
  
   # Read first frame
   success, frame = cap.read()
@@ -109,7 +137,27 @@ if __name__ == '__main__':
 
     # draw tracked objects
     for i, newbox in enumerate(boxes):
+      # box = cv2.boxPoints(i)
+      t1 = time.time()
+      print("t1  ", t1)
+      total = t1-t0
       p1 = (int(newbox[0]), int(newbox[1]))
+      center_x = (newbox[0] + newbox[3])/2
+      center_y = (newbox[2] + newbox[3])/2
+      center_text = "Center: "+str(center_x) +", " +str(center_y)
+      print(center_text)
+      index_of_obj = match_with_obj(center_x,center_y)
+      if index_of_obj != -1 and not first:
+        print (first)
+        print("before: ", obj_location_list[index_of_obj].time )
+        obj_location_list[index_of_obj].time = t1 - obj_location_list[index_of_obj].time
+
+        print("before: ", obj_location_list[index_of_obj].time )
+        print("time for index "+str(index_of_obj)+  ": "+str(obj_location_list[index_of_obj].time))
+      else:
+        obj_location_list.append(Usage(center_x,center_y))
+        print("making new")
+        first = False
       p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
       cv2.rectangle(frame, p1, p2, colors[i], 2, 1)
 
@@ -120,4 +168,3 @@ if __name__ == '__main__':
     # quit on ESC button
     if cv2.waitKey(1) & 0xFF == 27:  # Esc pressed
       break
-
