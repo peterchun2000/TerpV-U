@@ -16,6 +16,12 @@ t0 = time.time()
 tracked_times=[]
 obj_location_list=[]
 first = True
+data_time_sum = 0
+
+def get_data_sum():
+  for data in obj_location_list:
+    data_time_sum += obj_location_list[data]
+
 
 class Usage:
   def __init__(self, x, y, start_time):
@@ -133,7 +139,7 @@ def begin_tracking():
   videoPath = "videos/run.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(1)
+  cap = cv2.VideoCapture(0)
  
   # Read first frame
   success, frame = cap.read()
