@@ -14,10 +14,11 @@ tracked_times=[]
 obj_location_list=[]
 first = True
 class Usage:
-  def __init__(self, x, y):
+  def __init__(self, x, y, start_time):
     self.x = x
     self.y = y
-    self.time = 0.0
+    self.start_time = start_time
+    self.total_time = 0.0
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
 
 def createTrackerByName(trackerType):
@@ -59,8 +60,8 @@ def match_with_obj(center_x_in, center_y_in):
   for single_location in obj_location_list:
     checking_center_x = single_location.x 
     checking_center_y = single_location.y
-    print("subtracting x " + str(checking_center_x - center_x_in))
-    print("subtracting y" + str(checking_center_y - center_y_in))
+    # print("subtracting x " + str(checking_center_x - center_x_in))
+    # print("subtracting y" + str(checking_center_y - center_y_in))
     if abs(checking_center_x - center_x_in)<= 15 and abs(checking_center_y - center_y_in)<= 15:
       print("returned index" +str(counter))
       return counter
@@ -148,14 +149,11 @@ if __name__ == '__main__':
       print(center_text)
       index_of_obj = match_with_obj(center_x,center_y)
       if index_of_obj != -1 and not first:
-        print (first)
-        print("before: ", obj_location_list[index_of_obj].time )
-        obj_location_list[index_of_obj].time = t1 - obj_location_list[index_of_obj].time
+        obj_location_list[index_of_obj].time = t1 - obj_location_list[index_of_obj].start_time
 
-        print("before: ", obj_location_list[index_of_obj].time )
         print("time for index "+str(index_of_obj)+  ": "+str(obj_location_list[index_of_obj].time))
       else:
-        obj_location_list.append(Usage(center_x,center_y))
+        obj_location_list.append(Usage(center_x,center_y,time.time() ))
         print("making new")
         first = False
       p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
