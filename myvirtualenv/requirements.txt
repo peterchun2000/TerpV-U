@@ -21,7 +21,7 @@ mccabe==0.6.1
 nltk==3.4.4
 numpy==1.17.2
 opencv-contrib-python==4.1.1.26
-opencv-python==4.1.1.26
+opencv-python==4.2.0.32
 pycodestyle==2.4.0
 pylint==2.1.1
 pytz==2019.2
